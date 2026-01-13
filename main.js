@@ -110,4 +110,34 @@ document.addEventListener('DOMContentLoaded', () => {
         visionSubtitle.classList.add('reveal');
         revealObserver.observe(visionSubtitle);
     }
+
+    // Dynamic YouTube Video Loader
+    async function loadLatestVideo() {
+        const channelId = 'UCw1YJ6NQVKK3ZhKxapXbv2g';
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
+        const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+        const ytPlayer = document.getElementById('yt-player');
+
+        if (!ytPlayer) return;
+
+        try {
+            const response = await fetch(`${proxyUrl}${encodeURIComponent(rssUrl)}`);
+            const data = await response.json();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+
+            // Get the first entry (latest video)
+            const entries = xmlDoc.getElementsByTagName('entry');
+            if (entries.length > 0) {
+                const videoId = entries[0].getElementsByTagName('yt:videoId')[0].textContent;
+                console.log('Latest Video ID found:', videoId);
+                ytPlayer.src = `https://www.youtube.com/embed/${videoId}`;
+            }
+        } catch (error) {
+            console.error('Error fetching latest video:', error);
+            // Fallback is already set in HTML
+        }
+    }
+
+    loadLatestVideo();
 });

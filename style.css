@@ -19,19 +19,21 @@ html {
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     background-color: var(--black);
     color: var(--white);
-    line-height: 1.6;
+    line-height: 1.7;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Inter', sans-serif;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
+    font-weight: 800;
 }
 
 .container {
@@ -49,12 +51,13 @@ h3 {
 
 .subtitle {
     display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
     color: var(--primary);
     margin-bottom: 20px;
     text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
 }
 
 /* Header */
@@ -96,10 +99,11 @@ nav {
 .nav-links a {
     text-decoration: none;
     color: var(--white);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
     transition: var(--transition);
+    font-family: 'Inter', sans-serif;
 }
 
 .nav-links a:hover {
@@ -171,9 +175,10 @@ nav {
 }
 
 .carousel-content h1 {
-    font-size: 5rem;
-    line-height: 1;
+    font-size: 6rem;
+    line-height: 0.9;
     margin-bottom: 40px;
+    font-weight: 900;
 }
 
 .carousel-content h1 span {
@@ -189,13 +194,15 @@ nav {
 /* Buttons */
 .btn {
     padding: 18px 40px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
     text-decoration: none;
     border-radius: 4px;
     transition: var(--transition);
     display: inline-block;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
 }
 
 .btn-primary {
@@ -273,14 +280,14 @@ nav {
 }
 
 .vision-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 4.5rem;
-    line-height: 1.1;
+    font-family: 'Instrument Serif', serif;
+    font-size: 5.5rem;
+    line-height: 1.05;
     text-transform: none;
-    letter-spacing: -0.03em;
-    max-width: 1100px;
+    letter-spacing: -0.02em;
+    max-width: 1200px;
     margin: 0 auto;
-    font-weight: 700;
+    font-weight: 400;
     color: var(--white);
 }
 

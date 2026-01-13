@@ -157,6 +157,10 @@ nav {
     background-image: url('bible_reading.png');
 }
 
+#slide4 {
+    background-image: url('community.png');
+}
+
 .overlay {
     position: absolute;
     top: 0;

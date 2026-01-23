@@ -145,20 +145,17 @@ nav {
     background-position: center;
 }
 
-#slide1 {
-    background-image: url('hero_bg.jpg');
+#slide-cultos {
+    background-image: url('culto.jpg');
+    background-position: center top;
 }
 
-#slide2 {
-    background-image: url('eb_background.jpg');
+#slide-voluntariado {
+    background-image: url('voluntario.JPG');
 }
 
-#slide3 {
-    background-image: url('bible_reading.png');
-}
-
-#slide4 {
-    background-image: url('rd_background.jpg');
+#slide-kids {
+    background-image: url('kids.jpg');
 }
 
 .overlay {
@@ -264,6 +261,46 @@ nav {
     background: var(--white);
     width: 40px;
     border-radius: 10px;
+}
+
+/* About Section */
+.about-section {
+    padding: 150px 0;
+    background: var(--black);
+}
+
+.about-image {
+    position: relative;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    filter: grayscale(0.2);
+    transition: var(--transition);
+}
+
+.about-image:hover img {
+    filter: grayscale(0);
+    transform: scale(1.02);
+}
+
+.about-content h2 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 40px;
+}
+
+.about-content h2 span {
+    color: var(--primary);
+}
+
+.about-content p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 25px;
+    max-width: 600px;
 }
 
 /* Vision Section */

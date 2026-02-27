@@ -139,5 +139,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Ministerios Hover Logic
+    const ministerioItems = document.querySelectorAll('.ministerio-item');
+    const ministerioDetalhes = document.querySelectorAll('.ministerio-detalhe');
+
+    if (ministerioItems.length > 0) {
+        ministerioItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const targetId = 'min-' + item.getAttribute('data-target');
+
+                // Remove active classes
+                ministerioItems.forEach(i => i.classList.remove('active'));
+                ministerioDetalhes.forEach(d => d.classList.remove('active'));
+
+                // Add active class
+                item.classList.add('active');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                }
+            });
+        });
+    }
+
     loadLatestVideo();
 });

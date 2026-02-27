@@ -502,3 +502,179 @@ nav {
         font-size: 2rem;
     }
 }
+
+/* Pastors Section */
+.pastors-section {
+    padding: 100px 0;
+    background: var(--gray-900);
+}
+
+.pastors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.pastor-card {
+    background: var(--black);
+    padding: 30px;
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.pastor-card:hover {
+    transform: translateY(-10px);
+}
+
+.pastor-photo i {
+    font-size: 80px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.pastor-photo img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 3px solid var(--primary);
+}
+
+.pastor-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.pastor-card p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* Connecting Section */
+.connecting-section {
+    padding: 100px 0 0 0;
+    background: var(--black);
+}
+
+/* Ministerios Section (Hover Effect) */
+.ministerios-section {
+    padding: 50px 0;
+}
+
+.ministerios-container {
+    display: flex;
+    gap: 50px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 50px 0;
+}
+
+.ministerios-lista {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ministerio-item {
+    font-family: 'Instrument Serif', serif;
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: var(--transition);
+    line-height: 1;
+}
+
+.ministerio-item:hover,
+.ministerio-item.active {
+    color: var(--white);
+    transform: translateX(20px);
+}
+
+.ministerios-conteudo {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.ministerio-detalhe {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    transform: translateY(20px);
+    background: var(--gray-900);
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.ministerio-detalhe.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    position: relative;
+}
+
+.ministerio-detalhe h3 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+.ministerio-detalhe p {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* RDs e Voluntariado */
+.rds-voluntariado {
+    padding: 80px 0;
+    background: var(--gray-900);
+}
+
+.content-box {
+    background: var(--black);
+    padding: 50px;
+    border-radius: 12px;
+}
+
+.content-box h2 {
+    margin-bottom: 20px;
+    font-size: 2.2rem;
+}
+
+.content-box p {
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .ministerios-container {
+        flex-direction: column;
+    }
+
+    .ministerio-item {
+        font-size: 2.5rem;
+    }
+
+    .ministerio-item:hover,
+    .ministerio-item.active {
+        transform: translateX(10px);
+    }
+}

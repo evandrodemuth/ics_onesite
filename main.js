@@ -114,34 +114,57 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dynamic YouTube Video Loader
     async function loadLatestVideo() {
         const channelId = 'UCw1YJ6NQVKK3ZhKxapXbv2g';
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
+        const proxyUrl = 'https://corsproxy.io/?url=';
         const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
         const ytPlayer = document.getElementById('yt-player');
 
         if (!ytPlayer) return;
 
         try {
+            console.log('Fetching latest video from YouTube RSS...');
             const response = await fetch(`${proxyUrl}${encodeURIComponent(rssUrl)}`);
-            const data = await response.json();
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            const xmlText = await response.text();
             const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
             const entries = xmlDoc.getElementsByTagName('entry');
             let latestVideoId = null;
 
             for (let i = 0; i < entries.length; i++) {
                 const entry = entries[i];
-                const link = entry.getElementsByTagName('link')[0];
-                const href = link ? link.getAttribute('href') : '';
+                
+                // Try to find the link to check for Shorts
+                const links = entry.getElementsByTagName('link');
+                let href = '';
+                for (let l = 0; l < links.length; l++) {
+                    if (links[l].getAttribute('rel') === 'alternate') {
+                        href = links[l].getAttribute('href');
+                        break;
+                    }
+                }
                 
                 // Skip shorts
                 if (href && href.includes('/shorts/')) {
                     continue;
                 }
 
-                const videoIdTag = entry.getElementsByTagName('yt:videoId')[0];
+                // Try to get video ID with and without namespace
+                let videoIdTag = entry.getElementsByTagName('yt:videoId')[0];
+                if (!videoIdTag) {
+                    // Fallback for some browsers parsing namespaces differently
+                    const children = entry.children;
+                    for (let c = 0; c < children.length; c++) {
+                        if (children[c].nodeName.includes('videoId')) {
+                            videoIdTag = children[c];
+                            break;
+                        }
+                    }
+                }
+
                 if (videoIdTag) {
-                    latestVideoId = videoIdTag.textContent;
+                    latestVideoId = videoIdTag.textContent.trim();
                     console.log('Latest regular video found:', latestVideoId);
                     break;
                 }
@@ -149,6 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (latestVideoId) {
                 ytPlayer.src = `https://www.youtube.com/embed/${latestVideoId}`;
+            } else {
+                console.warn('No regular videos found in the first 15 entries.');
             }
         } catch (error) {
             console.error('Error fetching latest video:', error);

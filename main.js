@@ -89,8 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Close mobile menu if open
-                if (window.innerWidth <= 768) {
-                    // Logic to hide menu here if implemented
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    menuToggle.querySelector('i').classList.add('fa-bars');
+                    menuToggle.querySelector('i').classList.remove('fa-times');
                 }
             }
         });
@@ -105,11 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.1 });
 
-    const visionSubtitle = document.querySelector('.vision-subtitle');
-    if (visionSubtitle) {
-        visionSubtitle.classList.add('reveal');
-        revealObserver.observe(visionSubtitle);
-    }
+    document.querySelectorAll('.reveal').forEach(el => {
+        revealObserver.observe(el);
+    });
 
     // Dynamic YouTube Video Loader
     async function loadLatestVideo() {
@@ -139,26 +139,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Ministerios Hover Logic
+    // Ministerios Interaction Logic (Hover + Click for mobile)
     const ministerioItems = document.querySelectorAll('.ministerio-item');
     const ministerioDetalhes = document.querySelectorAll('.ministerio-detalhe');
 
     if (ministerioItems.length > 0) {
-        ministerioItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                const targetId = 'min-' + item.getAttribute('data-target');
+        function switchMinisterio(item) {
+            const targetId = 'min-' + item.getAttribute('data-target');
 
-                // Remove active classes
-                ministerioItems.forEach(i => i.classList.remove('active'));
-                ministerioDetalhes.forEach(d => d.classList.remove('active'));
-
-                // Add active class
-                item.classList.add('active');
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.classList.add('active');
-                }
+            // Remove active classes
+            ministerioItems.forEach(i => i.classList.remove('active'));
+            ministerioDetalhes.forEach(d => {
+                d.classList.remove('active');
+                d.style.display = 'none'; // Ensure display none is applied
             });
+
+            // Add active class
+            item.classList.add('active');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetElement.classList.add('active');
+                targetElement.style.display = 'block'; // Ensure display block is applied
+            }
+        }
+
+        ministerioItems.forEach(item => {
+            // Hover for desktop
+            item.addEventListener('mouseenter', () => switchMinisterio(item));
+            
+            // Click/Tap for mobile
+            item.addEventListener('click', () => switchMinisterio(item));
         });
     }
 

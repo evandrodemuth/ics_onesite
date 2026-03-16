@@ -126,16 +126,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data.contents, "text/xml");
 
-            // Get the first entry (latest video)
             const entries = xmlDoc.getElementsByTagName('entry');
-            if (entries.length > 0) {
-                const videoId = entries[0].getElementsByTagName('yt:videoId')[0].textContent;
-                console.log('Latest Video ID found:', videoId);
-                ytPlayer.src = `https://www.youtube.com/embed/${videoId}`;
+            let latestVideoId = null;
+
+            for (let i = 0; i < entries.length; i++) {
+                const entry = entries[i];
+                const link = entry.getElementsByTagName('link')[0];
+                const href = link ? link.getAttribute('href') : '';
+                
+                // Skip shorts
+                if (href && href.includes('/shorts/')) {
+                    continue;
+                }
+
+                const videoIdTag = entry.getElementsByTagName('yt:videoId')[0];
+                if (videoIdTag) {
+                    latestVideoId = videoIdTag.textContent;
+                    console.log('Latest regular video found:', latestVideoId);
+                    break;
+                }
+            }
+
+            if (latestVideoId) {
+                ytPlayer.src = `https://www.youtube.com/embed/${latestVideoId}`;
             }
         } catch (error) {
             console.error('Error fetching latest video:', error);
-            // Fallback is already set in HTML
         }
     }
 

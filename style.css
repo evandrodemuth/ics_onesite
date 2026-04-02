@@ -440,6 +440,21 @@ nav {
     margin-top: 5px;
 }
 
+.whatsapp-link {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+.whatsapp-link:hover p {
+    color: var(--primary);
+    transform: translateX(5px);
+}
+
+.whatsapp-link p {
+    transition: var(--transition);
+}
+
 .social-links {
     margin-top: 50px;
 }

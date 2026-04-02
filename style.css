@@ -691,6 +691,10 @@ nav {
     background: var(--gray-900);
 }
 
+.rds-voluntariado .grid {
+    align-items: stretch;
+}
+
 .content-box {
     background: var(--black);
     padding: 50px;

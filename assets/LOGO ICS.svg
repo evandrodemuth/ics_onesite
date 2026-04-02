@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xodm="http://www.corel.com/coreldraw/odm/2003" version="1.1" viewBox="0 0 733.26 737">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #e5e5e5;
+      }
+
+      .st1 {
+        fill: #0056b9;
+      }
+    </style>
+  </defs>
+  <circle class="st0" cx="370.49" cy="368.5" r="340.69"/>
+  <g id="Camada_x5F_1">
+    <g id="_2900149930800">
+      <path class="st1" d="M359.67,115.72c-78.49,0-142.36,63.85-142.36,142.36v363.2h62.25v-363.2c0-44.18,35.94-80.11,80.11-80.11s80.1,35.93,80.1,80.11v39.16h62.26v-39.16c0-78.5-63.87-142.36-142.36-142.36Z"/>
+      <polygon class="st1" points="439.7 621.27 501.94 621.27 501.94 452.29 439.7 452.29 439.7 621.27"/>
+      <polygon class="st1" points="439.76 439.29 502 439.29 502 311.02 439.76 311.02 439.76 439.29"/>
+      <polygon class="st1" points="345.67 399.63 426.06 399.63 426.06 337.38 345.67 337.38 345.67 399.63"/>
+      <polygon class="st1" points="515.67 399.63 596.07 399.63 596.07 337.38 515.67 337.38 515.67 399.63"/>
+    </g>
+  </g>
+</svg>

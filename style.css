@@ -158,6 +158,10 @@ nav {
     background-position: center;
 }
 
+#slide-expansao {
+    background-image: url('expansao.png');
+}
+
 #slide-cultos {
     background-image: url('culto.jpg');
     background-position: center top;

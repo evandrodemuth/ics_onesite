@@ -131,11 +131,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const entries = xmlDoc.getElementsByTagName('entry');
             let latestVideoId = null;
+            let firstRegularVideoId = null;
 
             for (let i = 0; i < entries.length; i++) {
                 const entry = entries[i];
+                const titleTag = entry.getElementsByTagName('title')[0];
+                const title = titleTag ? titleTag.textContent.toUpperCase() : '';
                 
-                // Try to find the link to check for Shorts
+                // Skip shorts
                 const links = entry.getElementsByTagName('link');
                 let href = '';
                 for (let l = 0; l < links.length; l++) {
@@ -145,35 +148,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                // Skip shorts
-                if (href && href.includes('/shorts/')) {
+                if (href && (href.includes('/shorts/') || title.includes('#SHORTS'))) {
                     continue;
                 }
 
-                // Try to get video ID with and without namespace
-                let videoIdTag = entry.getElementsByTagName('yt:videoId')[0];
-                if (!videoIdTag) {
-                    // Fallback for some browsers parsing namespaces differently
-                    const children = entry.children;
-                    for (let c = 0; c < children.length; c++) {
-                        if (children[c].nodeName.includes('videoId')) {
-                            videoIdTag = children[c];
-                            break;
-                        }
-                    }
+                // Get video ID
+                let videoId = null;
+                const videoIdTag = entry.getElementsByTagName('yt:videoId')[0] || 
+                                   entry.getElementsByTagName('videoId')[0]; 
+                
+                if (videoIdTag) {
+                    videoId = videoIdTag.textContent.trim();
+                } else {
+                    const match = href.match(/[?&]v=([^&]+)/);
+                    if (match) videoId = match[1];
                 }
 
-                if (videoIdTag) {
-                    latestVideoId = videoIdTag.textContent.trim();
-                    console.log('Latest regular video found:', latestVideoId);
-                    break;
+                if (videoId) {
+                    if (!firstRegularVideoId) firstRegularVideoId = videoId;
+                    
+                    if (title.includes('CULTO')) {
+                        latestVideoId = videoId;
+                        console.log('Latest Culto found:', title, latestVideoId);
+                        break;
+                    }
                 }
+            }
+
+            if (!latestVideoId) {
+                latestVideoId = firstRegularVideoId;
+                console.log('No specific "Culto" title found, using latest regular video:', latestVideoId);
             }
 
             if (latestVideoId) {
                 ytPlayer.src = `https://www.youtube.com/embed/${latestVideoId}`;
             } else {
-                console.warn('No regular videos found in the first 15 entries.');
+                console.warn('No suitable videos found in the feed.');
             }
         } catch (error) {
             console.error('Error fetching latest video:', error);

@@ -118,7 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             console.log('Fetching latest video from webhook...');
-            const response = await fetch('https://n8n.caminhosanto.com/webhook/last_yt_video');
+            // Using a CORS proxy because n8n might not have CORS enabled for this domain
+            const proxyUrl = 'https://corsproxy.io/?url=';
+            const targetUrl = 'https://n8n.caminhosanto.com/webhook/last_yt_video';
+            
+            const response = await fetch(`${proxyUrl}${encodeURIComponent(targetUrl)}`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
             const data = await response.json();
@@ -129,19 +133,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Extract video ID from YouTube URL
+            // Robust YouTube ID extraction
             let videoId = null;
-            const match = videoUrl.match(/[?&]v=([^&]+)/);
-            if (match) {
-                videoId = match[1];
-            } else {
-                const shortMatch = videoUrl.match(/youtu\.be\/([^?&]+)/);
-                if (shortMatch) videoId = shortMatch[1];
+            
+            // Standard and Short URLs
+            const patterns = [
+                /[?&]v=([^&]+)/,        // watch?v=ID
+                /youtu\.be\/([^?&]+)/,  // youtu.be/ID
+                /embed\/([^?&]+)/,      // embed/ID
+                /shorts\/([^?&]+)/,     // shorts/ID
+                /live\/([^?&]+)/        // live/ID
+            ];
+
+            for (const pattern of patterns) {
+                const match = videoUrl.match(pattern);
+                if (match && match[1]) {
+                    videoId = match[1];
+                    break;
+                }
             }
 
             if (videoId) {
                 ytPlayer.src = `https://www.youtube.com/embed/${videoId}`;
-                console.log('Latest video loaded:', videoId);
+                console.log('Latest video loaded successfully:', videoId);
             } else {
                 console.warn('Could not extract video ID from URL:', videoUrl);
             }

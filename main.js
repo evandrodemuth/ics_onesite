@@ -113,77 +113,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dynamic YouTube Video Loader
     async function loadLatestVideo() {
-        const channelId = 'UCw1YJ6NQVKK3ZhKxapXbv2g';
-        const proxyUrl = 'https://corsproxy.io/?url=';
-        const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
         const ytPlayer = document.getElementById('yt-player');
-
         if (!ytPlayer) return;
 
         try {
-            console.log('Fetching latest video from YouTube RSS...');
-            const response = await fetch(`${proxyUrl}${encodeURIComponent(rssUrl)}`);
+            console.log('Fetching latest video from webhook...');
+            const response = await fetch('https://n8n.caminhosanto.com/webhook/last_yt_video');
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            
-            const xmlText = await response.text();
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
 
-            const entries = xmlDoc.getElementsByTagName('entry');
-            let latestVideoId = null;
-            let firstRegularVideoId = null;
+            const data = await response.json();
+            const videoUrl = data.video_url;
 
-            for (let i = 0; i < entries.length; i++) {
-                const entry = entries[i];
-                const titleTag = entry.getElementsByTagName('title')[0];
-                const title = titleTag ? titleTag.textContent.toUpperCase() : '';
-                
-                // Skip shorts
-                const links = entry.getElementsByTagName('link');
-                let href = '';
-                for (let l = 0; l < links.length; l++) {
-                    if (links[l].getAttribute('rel') === 'alternate') {
-                        href = links[l].getAttribute('href');
-                        break;
-                    }
-                }
-                
-                if (href && (href.includes('/shorts/') || title.includes('#SHORTS'))) {
-                    continue;
-                }
-
-                // Get video ID
-                let videoId = null;
-                const videoIdTag = entry.getElementsByTagName('yt:videoId')[0] || 
-                                   entry.getElementsByTagName('videoId')[0]; 
-                
-                if (videoIdTag) {
-                    videoId = videoIdTag.textContent.trim();
-                } else {
-                    const match = href.match(/[?&]v=([^&]+)/);
-                    if (match) videoId = match[1];
-                }
-
-                if (videoId) {
-                    if (!firstRegularVideoId) firstRegularVideoId = videoId;
-                    
-                    if (title.includes('CULTO')) {
-                        latestVideoId = videoId;
-                        console.log('Latest Culto found:', title, latestVideoId);
-                        break;
-                    }
-                }
+            if (!videoUrl) {
+                console.warn('No video_url returned from webhook.');
+                return;
             }
 
-            if (!latestVideoId) {
-                latestVideoId = firstRegularVideoId;
-                console.log('No specific "Culto" title found, using latest regular video:', latestVideoId);
-            }
-
-            if (latestVideoId) {
-                ytPlayer.src = `https://www.youtube.com/embed/${latestVideoId}`;
+            // Extract video ID from YouTube URL
+            let videoId = null;
+            const match = videoUrl.match(/[?&]v=([^&]+)/);
+            if (match) {
+                videoId = match[1];
             } else {
-                console.warn('No suitable videos found in the feed.');
+                const shortMatch = videoUrl.match(/youtu\.be\/([^?&]+)/);
+                if (shortMatch) videoId = shortMatch[1];
+            }
+
+            if (videoId) {
+                ytPlayer.src = `https://www.youtube.com/embed/${videoId}`;
+                console.log('Latest video loaded:', videoId);
+            } else {
+                console.warn('Could not extract video ID from URL:', videoUrl);
             }
         } catch (error) {
             console.error('Error fetching latest video:', error);

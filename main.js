@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             console.log('Fetching latest video from webhook...');
             // Using a CORS proxy because n8n might not have CORS enabled for this domain
-            const proxyUrl = 'https://corsproxy.io/?url=';
+            const proxyUrl = 'https://api.codetabs.com/v1/proxy/?quest=';
             const targetUrl = 'https://n8n.caminhosanto.com/webhook/last_yt_video';
             
             const response = await fetch(`${proxyUrl}${encodeURIComponent(targetUrl)}`);

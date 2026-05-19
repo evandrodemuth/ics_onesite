@@ -121,8 +121,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Using a CORS proxy because n8n might not have CORS enabled for this domain
             const proxyUrl = 'https://api.codetabs.com/v1/proxy/?quest=';
             const targetUrl = 'https://n8n.caminhosanto.com/webhook/last_yt_video';
+            const timestamp = new Date().getTime();
             
-            const response = await fetch(`${proxyUrl}${encodeURIComponent(targetUrl)}`);
+            const response = await fetch(`${proxyUrl}${encodeURIComponent(targetUrl + '?_t=' + timestamp)}`, { cache: 'no-store' });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
             const data = await response.json();

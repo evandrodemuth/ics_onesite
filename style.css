@@ -744,3 +744,222 @@ nav {
         transform: translateX(10px);
     }
 }
+
+/* Devocionais Page */
+.devocional-intro {
+    text-align: center;
+    padding: 180px 0 48px 0;
+    background:
+        radial-gradient(circle at top center, rgba(0, 87, 185, 0.18), transparent 40%),
+        linear-gradient(to bottom, rgba(5, 5, 5, 0.82), var(--black));
+    position: relative;
+}
+
+.devocional-intro .container {
+    max-width: 1080px;
+}
+
+.devocional-intro h1 {
+    font-size: 4.5rem;
+    line-height: 0.9;
+    font-weight: 900;
+    margin-bottom: 18px;
+    letter-spacing: -0.05em;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+}
+
+.devocional-intro h1 span {
+    color: var(--primary);
+}
+
+.devocional-intro p {
+    font-size: 1.08rem;
+    color: var(--text-muted);
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.devocional-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+}
+
+.devocional-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(12px);
+}
+
+.devocional-container {
+    padding-top: 12px;
+    padding-bottom: 120px;
+    background: linear-gradient(to bottom, var(--black), #090d14 70%, var(--black));
+}
+
+.devocional-container .container {
+    max-width: 1200px;
+}
+
+.devocional-grid-all {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+    align-items: start;
+}
+
+.devocional-card {
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.98), rgba(12, 12, 12, 0.98));
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28);
+}
+
+.devocional-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 87, 185, 0.4);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.42), 0 0 30px rgba(0, 87, 185, 0.12);
+}
+
+.devocional-card .video-container {
+    border-radius: 18px 18px 0 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.devocional-card-body {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.devocional-card-body .ep-badge {
+    align-self: flex-start;
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--white);
+    background: var(--primary);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 4px;
+    letter-spacing: 0.12em;
+}
+
+.devocional-card-body h2 {
+    font-size: 1.32rem;
+    margin-bottom: 0;
+    color: var(--white);
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.devocional-card-body p {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    line-height: 1.68;
+    flex: 1;
+}
+
+.devocional-cta {
+    padding: 0 0 120px 0;
+    background: linear-gradient(to bottom, var(--black), #05070c);
+}
+
+.devocional-cta-box {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 48px 36px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top, rgba(0, 87, 185, 0.18), transparent 55%),
+        linear-gradient(180deg, rgba(18, 18, 18, 0.98), rgba(10, 10, 10, 0.98));
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+}
+
+.devocional-cta-box h2 {
+    font-size: 2.3rem;
+    margin-bottom: 18px;
+    line-height: 1.1;
+}
+
+.devocional-cta-box p {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 992px) {
+    .devocional-intro {
+        padding-top: 160px;
+    }
+
+    .devocional-grid-all {
+        grid-template-columns: 1fr;
+    }
+    
+    .devocional-intro h1 {
+        font-size: 3.5rem;
+    }
+
+    .devocional-cta-box h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .devocional-intro {
+        padding: 140px 0 36px 0;
+    }
+
+    .devocional-intro h1 {
+        font-size: 2.8rem;
+    }
+
+    .devocional-intro p {
+        font-size: 1rem;
+    }
+
+    .devocional-card-body {
+        padding: 20px;
+    }
+
+    .devocional-cta {
+        padding-bottom: 90px;
+    }
+
+    .devocional-cta-box {
+        padding: 36px 22px;
+        border-radius: 18px;
+    }
+
+    .devocional-cta-box h2 {
+        font-size: 1.7rem;
+    }
+
+    .devocional-cta-box p {
+        font-size: 0.98rem;
+    }
+}

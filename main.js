@@ -111,60 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(el);
     });
 
-    // Dynamic YouTube Video Loader
-    async function loadLatestVideo() {
-        const ytPlayer = document.getElementById('yt-player');
-        if (!ytPlayer) return;
-
-        try {
-            console.log('Fetching latest video from webhook...');
-            // Using a CORS proxy because n8n might not have CORS enabled for this domain
-            const proxyUrl = 'https://api.codetabs.com/v1/proxy/?quest=';
-            const targetUrl = 'https://n8n.caminhosanto.com/webhook/last_yt_video';
-            const timestamp = new Date().getTime();
-            
-            const response = await fetch(`${proxyUrl}${encodeURIComponent(targetUrl + '?_t=' + timestamp)}`, { cache: 'no-store' });
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-            const data = await response.json();
-            const videoUrl = data.video_url;
-
-            if (!videoUrl) {
-                console.warn('No video_url returned from webhook.');
-                return;
-            }
-
-            // Robust YouTube ID extraction
-            let videoId = null;
-            
-            // Standard and Short URLs
-            const patterns = [
-                /[?&]v=([^&]+)/,        // watch?v=ID
-                /youtu\.be\/([^?&]+)/,  // youtu.be/ID
-                /embed\/([^?&]+)/,      // embed/ID
-                /shorts\/([^?&]+)/,     // shorts/ID
-                /live\/([^?&]+)/        // live/ID
-            ];
-
-            for (const pattern of patterns) {
-                const match = videoUrl.match(pattern);
-                if (match && match[1]) {
-                    videoId = match[1];
-                    break;
-                }
-            }
-
-            if (videoId) {
-                ytPlayer.src = `https://www.youtube.com/embed/${videoId}`;
-                console.log('Latest video loaded successfully:', videoId);
-            } else {
-                console.warn('Could not extract video ID from URL:', videoUrl);
-            }
-        } catch (error) {
-            console.error('Error fetching latest video:', error);
-        }
-    }
-
     // Ministerios Interaction Logic (Hover + Click for mobile)
     const ministerioItems = document.querySelectorAll('.ministerio-item');
     const ministerioDetalhes = document.querySelectorAll('.ministerio-detalhe');
@@ -198,5 +144,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    loadLatestVideo();
 });
